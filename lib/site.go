@@ -8,7 +8,6 @@ import (
 	"os"
 	"path/filepath"
 	"strings"
-	"sync"
 	"text/template"
 	"time"
 )
@@ -20,8 +19,6 @@ type Site struct {
 	Pages     PageSlice
 
 	ForceRefresh bool
-
-	mx sync.Mutex
 
 	Processors map[string]Processor
 }

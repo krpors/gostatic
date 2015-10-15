@@ -11,6 +11,13 @@ import (
 
 var inventory = map[string]interface{}{}
 
+var (
+	// Regex to strip HTML off of text.
+	reHTML = regexp.MustCompile("<[^>]+>")
+	// Regex to strip of newlines.
+	reCRLF = regexp.MustCompile("[\r\n]")
+)
+
 func HasChanged(name string, value interface{}) bool {
 	changed := true
 
@@ -74,13 +81,13 @@ func Truncate(length int, value string) string {
 
 // StripHTML removes HTML tags from the value string and returns it.
 func StripHTML(value string) string {
-	return regexp.MustCompile("<[^>]+>").ReplaceAllString(value, "")
+	return reHTML.ReplaceAllString(value, "")
 }
 
 // StripNewlines removes all \r and \n characters from the value string,
 // and returns it as such.
 func StripNewlines(value string) string {
-	return regexp.MustCompile("[\r\n]").ReplaceAllString(value, "")
+	return reCRLF.ReplaceAllString(value, "")
 }
 
 // Replace replaces `old' with `new' in the given value string and returns it.
